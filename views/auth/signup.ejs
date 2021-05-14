@@ -7,20 +7,24 @@
    <%- include('../includes/navigation.ejs') %>
 
     <main>
-      <form action="/signup" class="login-form" action="POST">
-        <div class="form-control">
-          <label for="username">Username</label>
-          <input type="text" name="username" id="username" />
-        </div>
-        <div class="form-control">
-          <label for="password">Password</label>
-          <input type="password" name="password" id="password" />
-        </div>
-        <div class="form-control">
-          <label for="confirmPassword">Confirm Password</label>
-          <input type="confirmPassword" name="confirmPassword" id="confirmPassword" />
-        </div>
-        <button class="btn" type="submit">Sign Up</button>
-      </form>
+        <form action="/signup" class="login-form" method="POST">
+            <div class="form-control">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" />
+            </div>
+            <div class="form-control">
+                <label for="email">Email</label>
+                <input type="text" name="email" id="email" />
+            </div>
+            <div class="form-control">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" />
+            </div>
+            <div class="form-control">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" name="confirmPassword" id="confirmPassword" />
+            </div>
+            <button class="btn" type="submit">Sign Up</button>
+        </form>
     </main>
 <%- include('../includes/end.ejs') %>

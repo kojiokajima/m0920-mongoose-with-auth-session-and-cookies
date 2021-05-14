@@ -1,47 +1,49 @@
 const User = require('../models/User')
 
-exports.getLogin = (req, res, next) => {
-  res.render('/login', {
-    pageTitle: "Login",
-    path: '/login',
-    isAuth: req.isLoggedIn
-  })
+exports.getLogin = (req,res,next) => {
+    
+    res.render('auth/login', {
+        pageTitle: 'Login',
+        path: '/login',
+        isAuth: req.isLoggedIn
+    })
 }
-exports.postLogin = (req, res, next) => {
-  // req.isLoggedIn = true
-  // res.setHeader('Set-Cookie', 'loggedIn=true')
-  req.session.isLoggedIn = true
-  res.redirect('/')
-}
-exports.postLogout = (req, res, next) => {
-  req.session.destroy(err => {
-    console.log(err)
+
+exports.postLogin = (req,res,next) => {
+    // req.isLoggedIn = true
+    // res.setHeader('Set-Cookie', 'loggedIn=true')
+    req.session.isLoggedIn = true
     res.redirect('/')
-  })
 }
 
-exports.getSignup = (req, res, next) => {
-  res.render('auth/signup', {
-    pageTitle: "Sign Up",
-    path: '/signup',
-    isAuth: req.session.isLoggedIn
-  })
+exports.postLogout = (req,res,next) => {
+    req.session.destroy(err => {
+        console.log(err)
+        res.redirect('/')
+    })
 }
 
-exports.postSignup = (req, res, next) => {
-  const username = req.body.username
-  const email = req.body.email
-  const password = req.body.password
-  const confirmPassword = req.body.confirmPassword
+exports.getSignup = (req,res,next) => {
+    res.render('auth/signup', {
+        pageTitle: 'Sign Up',
+        path: '/signup',
+        isAuth: req.session.isLoggedIn
+    })
+}
 
-  const user = new User({
-    username,
-    email,
-    password,
-    cart: {items: []}
-  })
+exports.postSignup = (req,res,next) => {
+    const username = req.body.username
+    const email = req.body.email
+    const password = req.body.password
+    const confirmPassword = req.body.confirmPassword
 
-  user.save()
-  res.redirect('/')
+    const user = new User({
+        username,
+        email,
+        password,
+        cart: { items: [] }
+    })
 
+    user.save()
+    res.redirect('/login')
 }

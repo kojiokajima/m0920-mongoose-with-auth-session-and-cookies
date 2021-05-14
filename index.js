@@ -4,7 +4,6 @@ const mongoose = require('mongoose')
 const session = require('express-session')
 const MongoDBStore = require('connect-mongodb-session')(session);
 require('dotenv').config()
-const MongoDBStore = require('connect-mongodb-session')(session)
 
 const adminRouters = require('./routes/admin');
 const shopRouters = require('./routes/shop');
