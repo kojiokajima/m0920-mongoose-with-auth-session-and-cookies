@@ -21,7 +21,7 @@ exports.getOneProductById = (req, res, next) => {
         pageTitle: product.title,
         path: '/products',
         product: product,
-        isAuth: req.isLoggedIn
+        isAuth: req.session.isLoggedIn
       })
     })
     .catch((err) => console.log(err))
@@ -37,7 +37,7 @@ exports.getCart = (req, res, next) => {
         pageTitle: 'Your Cart',
         path: '/cart',
         products: products,
-        isAuth: req.isLoggedIn
+        isAuth: req.session.isLoggedIn
       })
     })
     .catch((err) => console.log(err))

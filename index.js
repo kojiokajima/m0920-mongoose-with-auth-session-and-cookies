@@ -36,7 +36,13 @@ app.use(session({
 
 // Dummy Auth
 app.use((req,res,next) => {
-    User.findById('609e0e2f646b8417cf3a77e8').then(user => {
+    if(!req.session.user){
+        return next()
+    }
+    User.findById(req.session.user._id).then(user => {
+        if(!user){
+            return next()
+        }
         req.user = user
         next()
     }).catch(err => console.log(err))
