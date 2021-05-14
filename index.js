@@ -1,16 +1,23 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose')
+const session = require('express-session')
+const MongoDBStore = require('connect-mongodb-session')(session);
 require('dotenv').config()
 
 const adminRouters = require('./routes/admin');
 const shopRouters = require('./routes/shop');
+const authRouters = require('./routes/auth')
 
 const errorController = require('./controllers/error');
 const User = require('./models/User')
 
 //--------------------Setups--------------------
 const app = express();
+const store = new MongoDBStore({
+    uri: process.env.MONGODB_URL,
+    collection: 'sessions'
+})
 app.use(express.urlencoded({extended:false}));
 
 //app.set = allows us to set any values globally on our express application
@@ -20,6 +27,12 @@ app.set('views','views');
 
 //serve file statically
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(session({
+    secret: process.env.SESSION_KEY,
+    resave: false,
+    saveUninitialized: false,
+    store: store
+}))
 
 // Dummy Auth
 app.use((req,res,next) => {
@@ -33,6 +46,7 @@ app.use((req,res,next) => {
 //--------------------Middleware--------------------
 app.use('/admin',adminRouters);
 app.use(shopRouters);
+app.use(authRouters)
 
 // catch all middleware
 app.use(errorController.get404);
