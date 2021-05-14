@@ -2,12 +2,13 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose')
 const session = require('express-session')
+const MongoDBStore = require('connect-mongodb-session')(session);
 require('dotenv').config()
 const MongoDBStore = require('connect-mongodb-session')(session)
 
 const adminRouters = require('./routes/admin');
 const shopRouters = require('./routes/shop');
-const authRouters = require('./routes/auth');
+const authRouters = require('./routes/auth')
 
 const errorController = require('./controllers/error');
 const User = require('./models/User');
@@ -46,7 +47,7 @@ app.use((req,res,next) => {
 //--------------------Middleware--------------------
 app.use('/admin',adminRouters);
 app.use(shopRouters);
-app.use(authRouters);
+app.use(authRouters)
 
 // catch all middleware
 app.use(errorController.get404);

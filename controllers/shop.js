@@ -1,15 +1,14 @@
 const Product = require('../models/Products')
 
 exports.getProducts = (req, res, next) => {
-  // const isLoggedIn = req.get('Cookie').split(' ')[1].split('=')[1] === 'true'
+  // const isLoggedIn = req.get('Cookie').split(' ')[2].split('=')[1] === 'true'
   Product.find()
     .then((products) => {
       res.render('shop/index', {
         pageTitle: 'Shop Page',
         path: '/',
         products: products,
-        // isAuth: isLoggedIn
-        isAuth: req.isLoggedIn
+        isAuth: req.session.isLoggedIn
       })
     })
     .catch((err) => console.log(err))
@@ -23,7 +22,6 @@ exports.getOneProductById = (req, res, next) => {
         path: '/products',
         product: product,
         isAuth: req.isLoggedIn
-
       })
     })
     .catch((err) => console.log(err))
@@ -40,7 +38,6 @@ exports.getCart = (req, res, next) => {
         path: '/cart',
         products: products,
         isAuth: req.isLoggedIn
-
       })
     })
     .catch((err) => console.log(err))
